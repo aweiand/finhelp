@@ -1,0 +1,17 @@
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		Nova Extração
+
+		<div class="pull-right">
+			<%= link_to 'Voltar', extracaos_path, class: "btn btn-sm btn-warning" %>
+		</div>
+	</div>
+
+	<div class="panel-body">
+		<%= render 'form', extracao: @extracao %>
+	</div>
+
+	<div class="panel-footer">
+		<%= link_to 'Voltar', extracaos_path, class: "btn btn-warning" %>
+	</div>
+</div>

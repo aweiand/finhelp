@@ -1,0 +1,55 @@
+<p id="notice"><%= notice %></p>
+
+<div class="page-header">
+  <h3 class="text-center">
+    Edição em Massa
+  </h3>
+</div>
+
+<%= render "generatexml" %>
+
+<div class="pull-left">
+  <%= link_to 'Novo Registro', new_extracao_path, class: "btn btn-primary", style: "color: #FFF" %>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Mês<br />Seq</th>
+        <th>Data</th>
+        <th>Emissão</th>
+        <th>Vencimento</th>
+        <th>Ateste</th>
+        <th>Pagamento</th>
+        <th>Doc Origem</th>
+        <th>Obs</th>
+        <th>Num Origem</th>
+        <th>Credor/CPF</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @extracaos.each do |extracao| %>
+      <tr>
+        <td><%= "#{extracao.mes}/#{extracao.sequencialdata}" %></td>
+        <td><%= extracao.data.strftime("%d/%m/%Y") %></td>
+        <td><%= extracao.dataemissao.strftime("%d/%m/%Y") %></td>
+        <td><%= extracao.datavencimento.strftime("%d/%m/%Y") %></td>
+        <td><%= extracao.dataateste.strftime("%d/%m/%Y") %></td>
+        <td><%= extracao.datapagamento.strftime("%d/%m/%Y") %></td>
+        <td><%= extracao.dtemissaodocorigem.strftime("%d/%m/%Y") %></td>
+        <td><%= extracao.observacao %></td>
+        <td><%= extracao.numerodocorigem %></td>
+        <td><%= humanCPF(extracao.credor) %></td>
+        <td>
+          <%= link_to 'Editar', edit_extracao_path(extracao), class: "btn btn-xs btn-warning" %>
+          &nbsp;          &nbsp;          &nbsp;
+          <%= link_to 'Remover', extracao, method: :delete, data: { confirm: 'Tem Certeza?' }, class: 'btn btn-xs btn-danger' %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,74 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require font-awesome
+ *= require jquery-ui
+ *= require_self
+ */
+
+ $color-primary:         #31A04A;
+ $color-primary-dark:    #abb88e;
+ $color-accent:          #cd191e;
+ $color-primary-contrast: #000;
+ $color-accent-contrast:  #000;
+
+ $gray-base:              #000;
+ $gray-darker:            #222;
+ $gray-dark:              #212121;
+ $gray:                   #666;
+ $gray-light:             #bdbdbd;
+ $gray-lighter:           #eee;
+
+ $brand-primary:         #31A04A;
+ $brand-success:         #abb88e;
+ $brand-info:            #9C27B0;
+ $brand-warning:         #ff9800;
+ $brand-danger:          #cd191e;
+
+ $body-bg:               #fff;
+ $text-color:            #000;
+ $link-color:            $brand-primary;
+ $link-hover-color:      darken($link-color, 15%);
+
+ $box-shadow:            $color-primary;
+
+ @import "bootstrap-sprockets";
+ @import "bootswatch/paper/variables";
+ @import "bootstrap";
+ @import "bootswatch/paper/bootswatch";
+
+.pagination {
+  text-align: center;
+  width: 100%;
+
+    & a, em, span {
+      @extend .btn;
+    }
+
+    & em.current {
+      background-color: rgb(205, 25, 30);
+      color: #FFF;
+    }
+
+    & span.previous_page, span.next_page {
+      &.disabled{
+        color: #CCC;
+      }
+    }
+}
+
+.form-inputs {
+  & input:disabled, select:disabled, input:read-only, input:-moz-read-only {
+    background-color: rgba(204, 204, 204, 0.13);
+  }
+}

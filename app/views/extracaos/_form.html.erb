@@ -1,0 +1,318 @@
+<%= form_with(model: extracao, local: true, html: {class: "form-horizontal"}) do |form| %>
+<% if extracao.errors.any? %>
+<div id="error_explanation" class="alert alert-danger" role="alert">
+  <h2><%= pluralize(extracao.errors.count, "erro") %> encontrado:</h2>
+
+  <ul>
+    <% extracao.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+
+<% unless notice.blank? %>
+<div class="alert alert-warning">
+  <p id="notice"><%= notice %></p>
+</div>
+<% end %>
+
+<div class="form-inputs">
+
+  <fieldset>
+    <legend>Dados Comuns</legend>
+    <div class="row">
+
+      <div class="form-group col-md-4">
+        <%= form.label :ug, class: 'col-md-4 control-label' %>
+        <div class="col-md-4">
+          <%= form.number_field :ug, class: "form-control" %>
+        </div>
+      </div>
+
+      <div class="form-group col-md-4">
+        <%= form.label :agenciaug, class: 'col-md-4 control-label' %>
+        <div class="col-md-3">
+          <%= form.number_field :agenciaug, class: 'form-control', id: :agenciaug, required: true %>
+        </div>
+      </div>
+
+      <div class="form-group col-md-4">
+        <%= form.label :controle, class: 'col-md-4 control-label' %>
+        <div class="col-md-7">
+          <span class="form-control">DH001</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="form-group col-md-4">
+        <%= form.label :mes, class: 'col-md-4 control-label' %>
+        <div class="col-md-2">
+          <%= form.number_field :mes, class: "form-control" %>
+        </div>
+      </div>
+
+      <div class="form-group col-md-4">
+        <%= form.label :ano, class: 'col-md-4 control-label' %>
+        <div class="col-md-3">
+          <%= form.number_field :ano, class: "form-control" %>
+        </div>
+      </div>
+
+      <div class="form-group col-md-4">
+        <%= form.label :data, class: 'col-md-4 control-label' %>
+        <div class="col-md-5">
+          <%= form.text_field :data, class: 'form-control date-inp', required: true %>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="form-group col-md-4">
+        <%= form.label :sequencialdata, class: 'col-md-4 control-label' %>
+        <div class="col-md-2">
+          <%= form.number_field :sequencialdata, class: "form-control" %>
+        </div>
+      </div>
+
+      <div class="form-group col-md-4">
+        <%= form.label :sequencial, class: 'col-md-4 control-label' %>
+        <div class="col-md-2">
+          <%= form.number_field :sequencial, class: "form-control" %>
+        </div>
+      </div>
+
+      <div class="form-group col-md-4">
+        <%= form.label :operador, class: 'col-md-4 control-label' %>
+        <div class="col-md-5">
+          <%= form.text_field :operador, class: "form-control" %>      
+        </div>
+      </div>
+
+    </div>
+
+  </fieldset>
+
+  <fieldset>
+    <legend>Datas</legend>
+    <div class="row">
+
+      <div class="form-group col-md-4">
+        <%= form.label :dataemissao, class: 'col-md-4 control-label' %>
+        <div class="col-md-5">
+          <%= form.text_field :dataemissao, class: "form-control date-inp" %>
+        </div>
+      </div>
+
+      <div class="form-group col-md-4">
+        <%= form.label :datavencimento, class: 'col-md-4 control-label' %>
+        <div class="col-md-5">
+          <%= form.text_field :datavencimento, class: "form-control date-inp" %>
+        </div>
+      </div>
+
+    </div>
+    <div class="row">
+
+      <div class="form-group col-md-4">
+        <%= form.label :dataateste, class: 'col-md-4 control-label' %>
+        <div class="col-md-5">
+          <%= form.text_field :dataateste, class: "form-control date-inp" %>
+        </div>
+      </div>
+
+      <div class="form-group col-md-4">
+        <%= form.label :datapagamento, class: 'col-md-4 control-label' %>
+        <div class="col-md-5">
+          <%= form.text_field :datapagamento, class: "form-control date-inp" %>
+        </div>
+      </div>
+
+      <div class="form-group col-md-4">
+        <%= form.label :dtemissaodocorigem, class: 'col-md-4 control-label' %>
+        <div class="col-md-5">
+          <%= form.text_field :dtemissaodocorigem, class: "form-control date-inp" %>
+        </div>
+      </div>
+
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Dados do Documento</legend>
+    <div class="row">
+      <div class="form-group col-md-12">
+        <%= form.label :observacao, class: 'col-md-2 control-label' %>
+        <div class="col-md-8">
+          <%= form.text_area :observacao, class: "form-control" %>
+        </div>
+      </div>
+
+    </div>
+    <div class="row">
+
+      <div class="form-group col-md-4">
+        <%= form.label :processodh, class: 'col-md-2 control-label' %>
+        <div class="col-md-8">
+          <%= form.text_field :processodh, class: "form-control" %>
+        </div>
+      </div>
+
+      <div class="form-group col-md-4">
+        <%= form.label :numerodocorigem, class: 'col-md-2 control-label' %>
+        <div class="col-md-8">
+          <%= form.text_field :numerodocorigem, class: "form-control" %>
+        </div>
+      </div>
+
+      <div class="form-group col-md-4">
+        <%= form.label :situacao, class: 'col-md-2 control-label' %>
+        <div class="col-md-8">
+          <%= form.text_field :situacao, class: "form-control" %>
+        </div>
+      </div>
+
+    </div>
+    <div class="row">
+
+      <div class="form-group col-md-4">
+        <%= form.label :empenho, class: 'col-md-2 control-label' %>
+        <div class="col-md-8">
+          <%= form.text_field :empenho, class: "form-control" %>
+        </div>
+      </div>
+
+      <div class="form-group col-md-4">
+        <%= form.label :contavpd, class: 'col-md-2 control-label' %>
+        <div class="col-md-8">
+          <%= form.number_field :contavpd, class: "form-control" %>
+        </div>
+      </div>
+
+      <div class="form-group col-md-4">
+        <%= form.label :centrodecusto, class: 'col-md-2 control-label' %>
+        <div class="col-md-8">
+          <%= form.text_field :centrodecusto, class: "form-control" %>
+        </div>
+      </div>
+
+    </div>
+    <div class="row">
+
+      <div class="form-group col-md-4">
+        <%= form.label :codigosiorg, class: 'col-md-2 control-label' %>
+        <div class="col-md-4">
+          <%= form.number_field :codigosiorg, class: "form-control" %>
+        </div>
+      </div>
+
+      <div class="form-group col-md-4">
+        <%= form.label :tipoob, class: 'col-md-2 control-label' %>
+        <div class="col-md-4">
+          <%= form.select(:tipoob, options_for_select(["OBC", "OBP"], form.object.tipoob), {include_blank: false}, {class: 'form-control', onchange: "javascript:changeTipoOb(this);"}) %>
+        </div>
+      </div>
+
+      <div class="form-group col-md-4">
+        <%= form.label :tipodh, class: 'col-md-2 control-label' %>
+        <div class="col-md-4">
+          <%= form.text_field :tipodh, class: "form-control" %>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="form-group col-md-4">
+        <%= form.label :contapagadora, class: 'col-md-2 control-label' %>
+        <div class="col-md-4">
+          <%= form.text_field :contapagadora, class: "form-control" %>
+        </div>
+      </div>
+
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Dados do Bancários do Beneficiário</legend>
+    <div class="row">
+
+      <div class="form-group col-md-4">
+        <%= form.label :banco, class: 'col-md-2 control-label' %>
+        <div class="col-md-4">
+          <%= form.text_field :banco, class: "form-control", id: :banco %>
+        </div>
+      </div>
+
+      <div class="form-group col-md-4">
+        <%= form.label :agencia, class: 'col-md-2 control-label' %>
+        <div class="col-md-4">
+          <%= form.text_field :agencia, class: "form-control", id: :agencia %>
+        </div>
+      </div>
+
+      <div class="form-group col-md-4">
+        <%= form.label :contafavorecido, class: 'col-md-2 control-label' %>
+        <div class="col-md-6">
+          <%= form.text_field :contafavorecido, class: "form-control", id: :contafavorecido %>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="form-group col-md-4">
+        <%= form.label :credor, class: 'col-md-2 control-label' %>
+        <div class="col-md-6">
+          <%= form.text_field :credor, class: "form-control" %>
+        </div>
+      </div>
+
+      <div class="form-group col-md-4">
+        <%= form.label :valor, class: 'col-md-2 control-label' %>
+        <div class="col-md-4">
+          <%= form.text_field :valor, class: "form-control" %>
+        </div>
+      </div>
+
+    </div>
+  </fieldset>
+
+  <div class="col-md-12 text-center">
+    <%= form.submit(t(:save_and_new), class: "btn btn-sm btn-primary") %>
+  </div>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+  $(function(){
+    $("input.date-inp").datepicker({
+      dateFormat: 'dd/mm/yy',
+      dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+      dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+      dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+      monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+      monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+      nextText: 'Próximo',
+      prevText: 'Anterior'
+    });
+  })
+
+  function changeTipoOb(e){
+    if (e.value == "OBP"){
+      $("#banco").val("1").attr("readonly", true);
+      $("#agencia").val($("#agenciaug").val()).attr("readonly", true);
+      $("#contafavorecido").val("PAGAMENTO").attr("readonly", true);
+    } else {
+      $("#banco").val("").attr("readonly", false);
+      $("#agencia").val("").attr("readonly", false);
+      $("#contafavorecido").val("").attr("readonly", false);
+    }
+  }
+</script>

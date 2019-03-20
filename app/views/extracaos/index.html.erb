@@ -1,0 +1,61 @@
+<p id="notice"><%= notice %></p>
+
+<div class="page-header">
+  <h3 class="text-center">
+    Extrações
+  </h3>
+</div>
+
+<%= render "copiar_mes" %>
+
+<%= render "generatexml" %>
+
+<div class="pull-left">
+  <%= link_to 'Novo Registro', new_extracao_path, class: "btn btn-primary", style: "color: #FFF" %>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>
+          <%= form_tag extracaos_path(format: "html"), method: "GET" do %>
+            <%= sortable("data", "Data") %>
+            <%= text_field_tag "por_data", nil, class: "date-inp", style: "width: 30%;" %>
+            <%= button_tag class: "btn btn-sm btn-primary" do %>
+            <i class="fa fa-search"></i>
+            <% end %>
+          <% end %>
+        </th>
+        <th><%= sortable("sequencialdata", "Sequencial Dt.") %></th>
+        <th><%= sortable("banco", "Banco") %></th>
+        <th><%= sortable("contafavorecido", "Conta") %></th>
+        <th><%= sortable("agencia", "Agência") %></th>
+        <th><%= sortable("credor", "Credor/CPF") %></th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @extracaos.each do |extracao| %>
+      <tr>
+        <td><%= extracao.data.strftime("%d/%m/%Y") %></td>
+        <td><%= extracao.sequencialdata %></td>
+        <td><%= extracao.banco %></td>
+        <td><%= extracao.contafavorecido %></td>
+        <td><%= extracao.agencia %></td>
+        <td><%= humanCPF(extracao.credor) %></td>
+        <td>
+          <%= link_to 'Editar', edit_extracao_path(extracao), class: "btn btn-sm btn-warning" %>
+          &nbsp;          &nbsp;          &nbsp;
+          <%= link_to 'Remover', extracao, method: :delete, data: { confirm: 'Tem Certeza?' }, class: 'btn btn-sm btn-danger' %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class="row">
+  <%= will_paginate @extracaos, inner_window: 1, outer_window: 1 %>
+</div>
