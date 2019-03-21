@@ -89,7 +89,7 @@ xml.tag!("sb:arquivo", "xmlns:ns2"=>"http://services.docHabil.cpr.siafi.tesouro.
 									xml.tag!("conta", dado.contapagadora)
 								end
 
-								xml.tag!("txtProcesso", dado.processoob)
+								xml.tag!("txtProcesso", dado.processodh)
 							end
 						end
 					end

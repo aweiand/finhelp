@@ -6,8 +6,8 @@ class ExtracaosController < ApplicationController
       redirect_to edita_massa_extracaos_path(params[:search][:date])
     else
       @extracaos = Extracao.where({
-        data:       params[:search][:date],
-        sequencial: params[:search][:sequencial]
+        data:           params[:search][:date],
+        sequencialdata: params[:search][:sequencial]
       })
 
       if @extracaos.count == 0
@@ -66,6 +66,66 @@ class ExtracaosController < ApplicationController
 
   def edita_massa
     @extracaos = Extracao.where(data: params[:id])
+  end
+
+  def import    
+  end
+
+  def importer
+    doc = File.open(params[:file].tempfile) { |f| Nokogiri::XML(f) }
+    
+    doc.xpath("//sb:detalhe").each do |detalhe|
+      cprdhcadastrar = detalhe.xpath("ns2:CprDhCadastrar")
+
+      dadospgto      = cprdhcadastrar.xpath("dadosPgto")
+      predoc         = dadospgto.xpath("predoc")
+      predocob       = predoc.xpath("predocOB")
+      numdomibancfav = predocob.xpath("numDomiBancFavo")
+      contapagadora  = predocob.xpath("numDomiBancPgto")
+
+      centrocusto    = cprdhcadastrar.xpath("centroCusto")
+
+      pco            = cprdhcadastrar.xpath("pco")
+      pcoitem        = pco.xpath("pcoItem")
+
+      dadosbasicos   = cprdhcadastrar.xpath("dadosBasicos")
+      docorigem      = dadosbasicos.xpath("docOrigem")
+      tmp = Extracao.new
+
+      tmp.agenciaug         = 694
+      tmp.data              = doc.xpath("//sb:dataGeracao").text
+      tmp.sequencialdata    = doc.xpath("//sb:sequencialGeracao").text
+      tmp.sequencial        = doc.xpath("//sb:sequencialGeracao").text
+      tmp.ug                = doc.xpath("//sb:ugResponsavel").text
+      tmp.operador          = doc.xpath("//sb:cpfResponsavel").text
+      tmp.tipodh            = cprdhcadastrar.xpath("codTipoDH").text
+      tmp.dataemissao       = dadosbasicos.xpath("dtEmis").text
+      tmp.datavencimento    = dadosbasicos.xpath("dtVenc").text
+      tmp.observacao        = dadosbasicos.xpath("txtObser").text
+      tmp.processodh        = dadosbasicos.xpath("txtProcesso").text
+      tmp.dataateste        = dadosbasicos.xpath("dtAteste").text
+      tmp.credor            = dadosbasicos.xpath("codCredorDevedor").text
+      tmp.datapagamento     = dadosbasicos.xpath("dtPgtoReceb").text
+      tmp.dtemissaodocorigem = docorigem.xpath("dtEmis").text
+      tmp.numerodocorigem   = docorigem.xpath("numDocOrigem").text
+      tmp.situacao          = pco.xpath("codSit").text
+      tmp.empenho           = pcoitem.xpath("numEmpe").text
+      tmp.valor             = pcoitem.xpath("vlr").text
+      tmp.contavpd          = pcoitem.xpath("numClassA").text
+      tmp.centrodecusto     = centrocusto.xpath("codCentroCusto").text
+      tmp.mes               = centrocusto.xpath("mesReferencia").text
+      tmp.ano               = centrocusto.xpath("anoReferencia").text
+      tmp.codigosiorg       = centrocusto.xpath("codSIORG").text
+      tmp.tipoob            = predocob.xpath("codTipoOB").text
+      tmp.banco             = numdomibancfav.xpath("banco").text
+      tmp.agencia           = numdomibancfav.xpath("agencia").text
+      tmp.contafavorecido   = numdomibancfav.xpath("conta").text
+      tmp.contapagadora     = contapagadora.xpath("conta").text
+
+      tmp.save
+    end
+
+    redirect_to extracaos_url
   end
 
   # POST /extracaos

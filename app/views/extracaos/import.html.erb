@@ -1,0 +1,23 @@
+<%= form_tag(importer_extracaos_path, local: true, html: {class: "form-horizontal"}, method: :post, multipart: true) do |form| %>
+
+<div class="form-inputs">
+
+  <fieldset>
+    <legend>Importar XML</legend>
+    <div class="row">
+
+      <div class="form-group col-md-4">
+        <%= label_tag :file %>
+        <br />
+        <%= file_field_tag :file %>
+      </div>
+
+      <div class="col-md-12 text-center">
+        <%= submit_tag("Importar", class: "btn btn-sm btn-primary") %>
+      </div>
+    </div>
+  </fieldset>
+
+</div>
+
+<% end %>
