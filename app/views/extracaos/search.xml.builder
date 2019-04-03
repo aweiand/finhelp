@@ -80,9 +80,9 @@ xml.tag!("sb:arquivo", "xmlns:ns2"=>"http://services.docHabil.cpr.siafi.tesouro.
 								xml.tag!("codCredorDevedor", dado.credor)
 
 								xml.tag!("numDomiBancFavo") do |numdomibancfavo|
-									xml.tag!("banco", dado.banco)
-									xml.tag!("agencia", dado.agencia)
-									xml.tag!("conta", dado.contafavorecido)
+									xml.tag!("banco", dado.getBanco)
+									xml.tag!("agencia", dado.getAgencia)
+									xml.tag!("conta", dado.getContaFav)
 								end
 
 								xml.tag!("numDomiBancPgto") do |numdomibancpgto|

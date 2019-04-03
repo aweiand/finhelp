@@ -26,9 +26,9 @@ class CreateExtracaos < ActiveRecord::Migration[5.1]
 			t.integer :ano
 			t.integer :codigosiorg
 			t.string  :tipoob
-			t.string  :banco
-			t.string  :agencia
-			t.string  :contafavorecido
+			t.string  :banco, default: "0"
+			t.string  :agencia, default: "0"
+			t.string  :contafavorecido, default: "0"
 			t.string  :contapagadora, default: "UNICA"
 
 			t.timestamps

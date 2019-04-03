@@ -25,9 +25,33 @@ class Extracao < ApplicationRecord
 	validates_length_of :ano, allow_blank: false, allow_nil: false, :minimum => 4
 	validates_length_of :codigosiorg, allow_blank: false, allow_nil: false, :minimum => 1
 	validates_length_of :tipoob, allow_blank: false, allow_nil: false, :minimum => 3
-	validates_length_of :banco, allow_blank: false, allow_nil: false, :minimum => 1
-	validates_length_of :agencia, allow_blank: false, allow_nil: false, :minimum => 1
+	validates_length_of :banco, allow_blank: false, allow_nil: false, :minimum => 1, :maximum => 3
+	validates_length_of :agencia, allow_blank: false, allow_nil: false, :minimum => 1, :maximum => 4
 	validates_length_of :contafavorecido, allow_blank: false, allow_nil: false, :minimum => 1
 	validates_length_of :contapagadora, allow_blank: false, allow_nil: false, :minimum => 1
+
+	def getBanco
+		if self.banco.blank?
+			"0"
+		else
+			self.banco
+		end
+	end
+
+	def getAgencia
+		if self.agencia.blank?
+			"0"
+		else
+			self.agencia
+		end
+	end
+
+	def getContaFav
+		if self.contafavorecido.blank?
+			"0"
+		else
+			self.contafavorecido
+		end
+	end
 
 end
