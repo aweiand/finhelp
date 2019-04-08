@@ -1,0 +1,111 @@
+wb = xlsx_package.workbook
+
+wb.add_worksheet(name: @filename) do |sheet|
+
+	sheet.add_row ["codigoLayout", "dataGeracao", "sequencialGeracao", "anoReferencia", "ugResponsavel", "cpfResponsavel", "quantidadeDetalhe"]
+	sheet.add_row [
+		"DH001", 
+		@extracaos.first.data.strftime("%d/%m/%Y"),
+		@extracaos.first.sequencial,
+		@extracaos.first.ano,
+		@extracaos.first.ug,
+		@extracaos.first.operador,
+		@extracaos.count
+	]
+
+	sheet.add_row [""]
+
+	sheet.add_row [
+		"codUgEmit",
+		"anoDH",
+		"codTipoDH",
+		"dtEmis",
+		"dtVenc",
+		"codUgPgto",
+		"vlr",
+		"txtObser",
+		"txtProcesso",
+		"dtAteste",
+		"codCredorDevedor",
+		"dtPgtoReceb",
+		"codIdentEmit",
+		"dtEmis",
+		"numDocOrigem",
+		"vlr",
+		"numSeqItem",
+		"codSit",
+		"codUgEmpe",
+		"numSeqItem",
+		"numEmpe",
+		"codSubItemEmpe",
+		"vlr",
+		"numClassA",
+		"numSeqItem",
+		"codCentroCusto",
+		"mesReferencia",
+		"anoReferencia",
+		"codUgBenef",
+		"codSIORG",
+		"numSeqPai",
+		"numSeqItem",
+		"vlr",
+		"codCredorDevedor",
+		"vlr",
+		"txtObser",
+		"codTipoOB",
+		"codCredorDevedor",
+		"banco",
+		"agencia",
+		"conta",
+		"txtProcesso"
+	]
+
+	@extracaos.each do |dado|
+
+		sheet.add_row [
+			dado.ug,
+			dado.ano,
+			dado.tipodh,
+			dado.dataemissao.strftime("%Y-%m-%d"),
+			dado.datavencimento.strftime("%Y-%m-%d"),
+			dado.ug,
+			dado.valor,
+			dado.observacao,
+			dado.processodh,
+			dado.dataateste.strftime("%Y-%m-%d"),
+			dado.credor,
+			dado.datapagamento.strftime("%Y-%m-%d"),
+			dado.ug,
+			dado.dataemissao.strftime("%Y-%m-%d"),
+			dado.numerodocorigem,
+			dado.valor,
+			1,
+			dado.situacao,
+			dado.ug,
+			1,
+			dado.empenho,
+			"01",
+			dado.valor,
+			dado.contavpd,
+			1,
+			dado.centrodecusto,
+			dado.mes,
+			dado.ano,
+			dado.ug,
+			dado.codigosiorg,
+			1,
+			1,
+			dado.valor,
+			dado.credor,
+			dado.valor,
+			dado.observacao,
+			dado.tipoob,
+			dado.credor,
+			dado.getBanco,
+			dado.getAgencia,
+			dado.contapagadora,
+			dado.processodh
+		]
+
+	end
+end

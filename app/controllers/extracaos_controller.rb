@@ -2,17 +2,28 @@ class ExtracaosController < ApplicationController
   before_action :set_extracao, only: [:show, :edit, :update, :destroy]
 
   def search
-    if (params[:commit] == "Editar em Massa")
+    if (params[:format] == "edit")
       redirect_to edita_massa_extracaos_path(params[:search][:date])
-    else
-      @extracaos = Extracao.where({
-        data:           params[:search][:date],
-        sequencialdata: params[:search][:sequencial]
-      })
+      return
+    end
 
-      if @extracaos.count == 0
-        redirect_to extracaos_path
-      end
+    @extracaos = Extracao.where({
+      data:           params[:search][:date],
+      sequencial:     params[:search][:sequencial]
+    })
+    
+    if @extracaos.count == 0
+      redirect_to extracaos_path
+      return
+    end
+
+    @filename = @extracaos.first.data.strftime("%d-%m-%Y").to_s + "_" + @extracaos.first.sequencial.to_s
+
+    respond_to do |format|
+      format.xml
+      format.xlsx {
+        response.headers['Content-Disposition'] = "attachment; filename='#{@filename}.xlsx'"
+      }
     end
   end
 
@@ -43,13 +54,16 @@ class ExtracaosController < ApplicationController
   def edit
   end
 
+  def copiar_mes    
+  end
+
   def copiar
-    extracaos = Extracao.where(mes: params[:mes_de], sequencialdata: params[:sequencial_de])
+    extracaos = Extracao.where(mes: params[:mes_de], sequencial: params[:sequencial_de])
     extracaos.each do |extracao|
       new_extracao                    = extracao.dup
       new_extracao.data               = params[:data]
       new_extracao.mes                = params[:mes_para]
-      new_extracao.sequencialdata     = params[:sequencial_para]
+      new_extracao.sequencial         = params[:sequencial_para]
       new_extracao.dataemissao        = params[:dataemissao]
       new_extracao.datavencimento     = params[:datavencimento]
       new_extracao.dataateste         = params[:dataateste]
@@ -94,7 +108,6 @@ class ExtracaosController < ApplicationController
 
       tmp.agenciaug         = 694
       tmp.data              = doc.xpath("//sb:dataGeracao").text
-      tmp.sequencialdata    = doc.xpath("//sb:sequencialGeracao").text
       tmp.sequencial        = doc.xpath("//sb:sequencialGeracao").text
       tmp.ug                = doc.xpath("//sb:ugResponsavel").text
       tmp.operador          = doc.xpath("//sb:cpfResponsavel").text
@@ -176,7 +189,7 @@ class ExtracaosController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def extracao_params
       params.require(:extracao).permit(
-        :agenciaug, :data, :sequencialdata, :sequencial, 
+        :agenciaug, :data, :sequencial, 
         :ug, :operador, :tipodh, :dataemissao, :datavencimento,
         :observacao, :processodh, :dataateste, :credor, 
         :datapagamento, :dtemissaodocorigem, :numerodocorigem, 

@@ -33,7 +33,7 @@
     <tbody>
       <% @extracaos.each do |extracao| %>
       <tr>
-        <td><%= "#{extracao.mes}/#{extracao.sequencialdata}" %></td>
+        <td><%= "#{extracao.mes}/#{extracao.sequencial}" %></td>
         <td><%= extracao.data.strftime("%d/%m/%Y") %></td>
         <td><%= extracao.dataemissao.strftime("%d/%m/%Y") %></td>
         <td><%= extracao.datavencimento.strftime("%d/%m/%Y") %></td>

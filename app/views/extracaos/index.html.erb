@@ -1,19 +1,13 @@
 <p id="notice"><%= notice %></p>
 
-<div class="page-header">
-  <h3 class="text-center">
-    Extrações
-  </h3>
-</div>
-
-<%= render "copiar_mes" %>
-
 <%= render "generatexml" %>
 
 <div class="pull-left">
   <%= link_to 'Novo Registro', new_extracao_path, class: "btn btn-primary", style: "color: #FFF" %>
 </div>
 
+<fieldset class="col-md-12">
+  <legend>Base de Dados</legend>
 <div class="table-responsive">
   <table class="table table-striped">
     <thead>
@@ -27,7 +21,7 @@
             <% end %>
           <% end %>
         </th>
-        <th><%= sortable("sequencialdata", "Sequencial Dt.") %></th>
+        <th><%= sortable("sequencial", "Sequencial") %></th>
         <th><%= sortable("banco", "Banco") %></th>
         <th><%= sortable("contafavorecido", "Conta") %></th>
         <th><%= sortable("agencia", "Agência") %></th>
@@ -40,7 +34,7 @@
       <% @extracaos.each do |extracao| %>
       <tr>
         <td><%= extracao.data.strftime("%d/%m/%Y") %></td>
-        <td><%= extracao.sequencialdata %></td>
+        <td><%= extracao.sequencial %></td>
         <td><%= extracao.banco %></td>
         <td><%= extracao.contafavorecido %></td>
         <td><%= extracao.agencia %></td>
@@ -59,3 +53,5 @@
 <div class="row">
   <%= will_paginate @extracaos, inner_window: 1, outer_window: 1 %>
 </div>
+
+</fieldset>

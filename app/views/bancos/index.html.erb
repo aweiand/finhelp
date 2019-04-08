@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<div class="pull-left">
+  <%= link_to 'Novo Banco', new_banco_path, class: "btn btn-primary" %>
+</div>
+
+<fieldset class="col-md-12">
+  <legend>Bancos</legend>
+
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th><%= sortable("codigo", "Código") %></th>
+          <th><%= sortable("nome", "Nome") %></th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @bancos.each do |banco| %>
+        <tr>
+          <td><%= banco.codigo %></td>
+          <td><%= banco.nome %></td>
+          <td>
+            <%= link_to 'Editar', edit_banco_path(banco), class: "btn btn-sm btn-warning" %>
+            &nbsp;          &nbsp;          &nbsp;
+            <%= link_to 'Remover', banco, method: :delete, data: { confirm: 'Tem Certeza?' }, class: 'btn btn-sm btn-danger' %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+  </div>
+
+  <div class="row">
+    <%= will_paginate @extracaos, inner_window: 1, outer_window: 1 %>
+  </div>
+
+</fieldset>

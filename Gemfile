@@ -82,3 +82,7 @@ gem 'validates_cpf_cnpj'
 # Paginate
 # https://github.com/mislav/will_paginate
 gem 'will_paginate'
+
+gem 'rubyzip', '~> 1.1.0'
+gem 'axlsx', '2.1.0.pre'
+gem 'axlsx_rails'

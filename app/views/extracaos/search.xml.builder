@@ -40,21 +40,21 @@ xml.tag!("sb:arquivo", "xmlns:ns2"=>"http://services.docHabil.cpr.siafi.tesouro.
 					end
 
 					xml.tag!("pco") do |pco|
-						xml.tag!("numSeqItem", dado.sequencial)
+						xml.tag!("numSeqItem", 1)
 						xml.tag!("codSit", dado.situacao)
 						xml.tag!("codUgEmpe", dado.ug)
 
 						xml.tag!("pcoItem") do |pcoitem|
-							xml.tag!("numSeqItem", dado.sequencial)
+							xml.tag!("numSeqItem", 1)
 							xml.tag!("numEmpe", dado.empenho)
-							xml.tag!("codSubItemEmpe", "0#{dado.sequencial}")
+							xml.tag!("codSubItemEmpe", "01")
 							xml.tag!("vlr", dado.valor)
 							xml.tag!("numClassA", dado.contavpd)
 						end
 					end
 
 					xml.tag!("centroCusto") do |centrocusto|
-						xml.tag!("numSeqItem", dado.sequencial)
+						xml.tag!("numSeqItem", 1)
 						xml.tag!("codCentroCusto", dado.centrodecusto)
 						xml.tag!("mesReferencia", dado.mes)
 						xml.tag!("anoReferencia", dado.ano)
@@ -62,8 +62,8 @@ xml.tag!("sb:arquivo", "xmlns:ns2"=>"http://services.docHabil.cpr.siafi.tesouro.
 						xml.tag!("codSIORG", dado.codigosiorg)
 
 						xml.tag!("relPcoItem") do |relpcoitem|
-							xml.tag!("numSeqPai", dado.sequencial)
-							xml.tag!("numSeqItem", dado.sequencial)
+							xml.tag!("numSeqPai", 1)
+							xml.tag!("numSeqItem", 1)
 							xml.tag!("vlr", dado.valor)
 						end
 					end

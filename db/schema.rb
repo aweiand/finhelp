@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190315153127) do
+ActiveRecord::Schema.define(version: 20190408123014) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bancos", force: :cascade do |t|
+    t.string "codigo"
+    t.string "nome"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "extracaos", force: :cascade do |t|
     t.integer "agenciaug", default: 694
