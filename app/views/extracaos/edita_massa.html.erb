@@ -1,8 +1,10 @@
-<p id="notice"><%= notice %></p>
+<% unless notice.blank? %>
+  <p id="notice" class="alert alert-danger"><%= notice %></p>
+<% end %>
 
 <div class="page-header">
   <h3 class="text-center">
-    Edição em Massa
+    Edição em Massa (<%= @extracaos.count %> registros)
   </h3>
 </div>
 
@@ -23,7 +25,7 @@
         <th>Ateste</th>
         <th>Pagamento</th>
         <th>Doc Origem</th>
-        <th>Obs</th>
+        <th style="width: 20%;">Obs</th>
         <th>Num Origem</th>
         <th>Credor/CPF</th>
         <th></th>
@@ -32,7 +34,8 @@
 
     <tbody>
       <% @extracaos.each do |extracao| %>
-      <tr>
+
+      <tr style="<%= "color: red;" if extracao.contafavorecido == "0" and extracao.agencia == "0" %>">
         <td><%= "#{extracao.mes}/#{extracao.sequencial}" %></td>
         <td><%= extracao.data.strftime("%d/%m/%Y") %></td>
         <td><%= extracao.dataemissao.strftime("%d/%m/%Y") %></td>

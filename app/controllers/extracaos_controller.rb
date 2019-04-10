@@ -22,7 +22,7 @@ class ExtracaosController < ApplicationController
     respond_to do |format|
       format.xml
       format.xlsx {
-        response.headers['Content-Disposition'] = "attachment; filename='#{@filename}.xlsx'"
+        response.headers['Content-Disposition'] = "attachment; filename=#{@filename}.xlsx"
       }
     end
   end
@@ -47,7 +47,7 @@ class ExtracaosController < ApplicationController
 
   # GET /extracaos/new
   def new
-    @extracao = Extracao.last.dup
+    @extracao = Extracao.first.dup
   end
 
   # GET /extracaos/1/edit
@@ -161,11 +161,9 @@ class ExtracaosController < ApplicationController
   def update
     respond_to do |format|
       if @extracao.update(extracao_params)
-        format.html { redirect_to @extracao, notice: 'Extracao was successfully updated.' }
-        format.json { render :show, status: :ok, location: @extracao }
+        format.html { redirect_to edita_massa_extracaos_path(@extracao.data), notice: 'Item Atualizado!' }
       else
         format.html { render :edit }
-        format.json { render json: @extracao.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -175,7 +173,7 @@ class ExtracaosController < ApplicationController
   def destroy
     @extracao.destroy
     respond_to do |format|
-      format.html { redirect_to extracaos_url, notice: 'Extracao was successfully destroyed.' }
+      format.html { redirect_to extracaos_url, notice: 'Item Destruído!' }
       format.json { head :no_content }
     end
   end
