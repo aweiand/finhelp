@@ -18,3 +18,5 @@
 
 .byebug_history
 .env.production
+
+public/assets/*

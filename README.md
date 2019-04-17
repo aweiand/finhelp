@@ -32,9 +32,10 @@ Para instalação das dependências:
 
 * bundle install - dentro da pasta do projeto
 
-* rake db:create - criando a base
+* RAILS_ENV=production rake db:create - criando a base
 
-* rake db:migrate - criando as tabelas
+* RAILS_ENV=production rake db:migrate - criando as tabelas
 
-* rake db:seed - semeando dados de uso
+* RAILS_ENV=production rake db:seed - semeando dados de uso
 
+* RAILS_ENV=production bundle exec rake assets:precompile - para compilar o CSS
