@@ -1,0 +1,16 @@
+<section class="login-form">
+  <div class="wrapper">
+    <%= form_tag(loginin_path, class: "form-signin", method: "post") do |f| %>
+    <div class="form-group">
+
+      <h2 class="form-signin-heading">Login</h2>
+
+      <%= text_field_tag :login, nil, class: "form-control", id: :login, placeholder: "Login" %>
+      <%= password_field_tag :password, nil, class: "form-control", id: :password, placeholder: "Senha" %>
+    
+      <%= submit_tag "Login", class: "btn btn-lg btn-primary btn-block" %>
+
+    <% end %>
+
+  </div>
+</section>

@@ -2,7 +2,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
 
   helper_method :sort_column, :sort_direction, :per_page
-  before_action :set_locale
+  helper_method :authorized?
+  before_action :set_locale, :redirect_unauthorized
   
   layout Proc.new { |controller| controller.request.xhr? ? false: 'application' }
   
@@ -15,6 +16,24 @@ class ApplicationController < ActionController::Base
     end
 
     I18n.locale = session[:locale]
+  end
+
+  def authorized?
+    !session[:logged].nil?
+  end
+
+  def unauthorized_page
+    respond_to do |format|
+      format.html { render :file => "public/401.html", :status => :unauthorized }
+      format.xml  { head :not_found }
+      format.any  { head :not_found }
+    end
+  end  
+
+  def redirect_unauthorized
+    unless authorized?
+      redirect_to login_path
+    end
   end
 
   # Método para o limite de resultados por página padrão

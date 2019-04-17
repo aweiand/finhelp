@@ -1,24 +1,40 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Aplicação para auxílio na criação/manutenção do XML para assitência ao educando do financeiro do IFRS
 
-Things you may want to cover:
+A versão funcional no Campus Osório foi feita com:
 
-* Ruby version
+* Ubuntu Server 16.04.1 LTS
 
-* System dependencies
+* Ruby 2.3.1p112
 
-* Configuration
+* Apache 2.4.18
 
-* Database creation
+* PostgreSQL 9.5.10
 
-* Database initialization
+* Phusion Passenger 5.0.30
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
+Recomenda-se a edição dos arquivos:
 
-* Deployment instructions
+* secrets.yml alterando as hashs necessárias
 
-* ...
+* database.yml
+
+* .env.development deve ser editado e salvo como .env.production
+
+* alteração de parâmetros padrão no arquivo seeds.rb para semear de acordo com as necessidades
+
+* welcome_controller.rb - alterando usuário/senha "simples" de login
+
+
+Para instalação das dependências:
+
+* bundle install - dentro da pasta do projeto
+
+* rake db:create - criando a base
+
+* rake db:migrate - criando as tabelas
+
+* rake db:seed - semeando dados de uso
+

@@ -1,3 +1,39 @@
-// Place all the styles related to the Welcome controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.login-form {
+	.wrapper {  
+	  margin-top: 80px;
+	  margin-bottom: 80px;
+	}
+
+	.form-signin {
+	  max-width: 380px;
+	  padding: 15px 35px 45px;
+	  margin: 0 auto;
+	  background-color: #fff;
+	  border: 1px solid rgba(0,0,0,0.1);  
+
+	  .form-control {
+	    position: relative;
+	    font-size: 16px;
+	    height: auto;
+	    padding: 10px;
+
+	    &:focus {
+	      z-index: 2;
+	    }
+	  }
+
+	  input[type="text"] {
+	    margin-bottom: -1px;
+	    border: 1px solid #CCC;
+	    border-bottom-left-radius: 0;
+	    border-bottom-right-radius: 0;
+	  }
+
+	  input[type="password"] {
+	    margin-bottom: 20px;
+	    border: 1px solid #CCC;
+	    border-top-left-radius: 0;
+	    border-top-right-radius: 0;
+	  }
+	}
+}
