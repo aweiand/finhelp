@@ -59,7 +59,7 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # https://github.com/twbs/bootstrap-sass
-gem 'bootstrap-sass', '3.2.0.2'
+gem 'bootstrap-sass', '~> 3.2'
 
 # DOC: https://github.com/maxim/bootswatch-rails
 # Styles: https://bootswatch.com/paper/

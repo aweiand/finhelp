@@ -14,6 +14,7 @@ A versão funcional no Campus Osório foi feita com:
 
 * Phusion Passenger 5.0.30
 
+Para instalação do Rails no Ubuntu, sugere-se seguir o seguinte tutorial https://gorails.com/setup/ubuntu/16.04 
 
 Recomenda-se a edição dos arquivos:
 
