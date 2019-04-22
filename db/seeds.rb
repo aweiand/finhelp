@@ -10,7 +10,6 @@ Extracao.create([
 	{
 		agenciaug: 694,
 		data: "26/02/2019",
-		sequencialdata: 1,
 		sequencial: 1,
 		ug: 158327,
 		operador: "39398189097",

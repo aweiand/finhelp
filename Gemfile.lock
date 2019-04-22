@@ -207,7 +207,7 @@ PLATFORMS
 DEPENDENCIES
   axlsx (= 2.1.0.pre)
   axlsx_rails
-  bootstrap-sass (= 3.2.0.2)
+  bootstrap-sass (~> 3.2)
   bootswatch-rails
   byebug
   capybara (~> 2.13)

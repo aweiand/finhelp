@@ -14,7 +14,9 @@ A versão funcional no Campus Osório foi feita com:
 
 * Phusion Passenger 5.0.30
 
-Para instalação do Rails no Ubuntu, sugere-se seguir o seguinte tutorial https://gorails.com/setup/ubuntu/16.04 
+ - Para instalação do Rails no Ubuntu, sugere-se seguir o seguinte tutorial: https://gorails.com/setup/ubuntu/16.04 
+ - Para instalação em Produção, recomenda-se o Passenger, o seguinte tutorial auxilia na configuração: https://www.phusionpassenger.com/library/walkthroughs/deploy/ruby/ownserver/apache/oss/xenial/install_passenger.html
+ - Recomenda-se a instalação do YARN: https://yarnpkg.com/en/docs/install#debian-stable
 
 Recomenda-se a edição dos arquivos:
 
