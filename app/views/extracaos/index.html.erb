@@ -1,6 +1,10 @@
-<p id="notice"><%= notice %></p>
-
 <%= render "generatexml" %>
+
+<% unless notice.blank? %>
+<div class="alert alert-warning">
+  <p id="notice"><%= notice %></p>
+</div>
+<% end %>
 
 <div class="pull-left">
   <%= link_to 'Novo Registro', new_extracao_path, class: "btn btn-primary", style: "color: #FFF" %>

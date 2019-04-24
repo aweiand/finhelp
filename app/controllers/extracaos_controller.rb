@@ -109,6 +109,8 @@ class ExtracaosController < ApplicationController
       tmp = Extracao.new
 
       tmp.agenciaug         = 694
+      tmp.grupo_id          = params[:grupo]
+
       tmp.data              = doc.xpath("//sb:dataGeracao").text
       tmp.sequencial        = doc.xpath("//sb:sequencialGeracao").text
       tmp.ug                = doc.xpath("//sb:ugResponsavel").text

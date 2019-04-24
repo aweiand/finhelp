@@ -12,6 +12,12 @@
         <%= file_field_tag :file %>
       </div>
 
+      <div class="col-md-4">
+        <%= label_tag :grupo, "Grupo" %>
+        <br />
+        <%= select_tag("grupo", options_for_select(Grupo.all.collect {|x| [x.nome, x.id]}), {include_blank: false, required: true, style: "width: 50%;" }) %>
+      </div>
+
       <div class="col-md-12 text-center">
         <%= submit_tag("Importar", class: "btn btn-sm btn-primary") %>
       </div>
