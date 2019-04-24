@@ -274,6 +274,14 @@
         </div>
       </div>
 
+
+      <div class="form-group col-md-4">
+        <%= form.label :grupo, class: 'col-md-2 control-label' %>
+        <div class="col-md-4">
+          <%= form.collection_select(:grupo_id, Grupo.all.order(:nome), :id, :nome, {include_blank: false, required: true}, {class: "form-control"}) %>
+        </div>
+      </div>
+
     </div>
   </fieldset>
 

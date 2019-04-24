@@ -3,13 +3,14 @@ class ExtracaosController < ApplicationController
 
   def search
     if (params[:format] == "edit")
-      redirect_to edita_massa_extracaos_path(params[:search][:date])
+      redirect_to edita_massa_extracaos_path(params[:search][:mes], params[:search][:sequencial], params[:search][:grupo_id])
       return
     end
 
     @extracaos = Extracao.where({
-      data:           params[:search][:date],
-      sequencial:     params[:search][:sequencial]
+      mes:           params[:search][:mes],
+      sequencial:    params[:search][:sequencial],
+      grupo:         params[:search][:grupo_id]
     })
     
     if @extracaos.count == 0
@@ -31,10 +32,10 @@ class ExtracaosController < ApplicationController
   # GET /extracaos.json
   def index
     if params[:por_data].blank?
-      @extracaos = Extracao.paginate(:page => params[:page], :per_page => per_page)
+      @extracaos = Extracao.unscoped.paginate(:page => params[:page], :per_page => per_page)
       .order(sort_column + " " + sort_direction)
     else
-      @extracaos = Extracao.where(data: params[:por_data])
+      @extracaos = Extracao.unscoped.where(data: params[:por_data])
       .paginate(:page => params[:page], :per_page => per_page)
       .order(sort_column + " " + sort_direction)
     end
@@ -58,12 +59,13 @@ class ExtracaosController < ApplicationController
   end
 
   def copiar
-    extracaos = Extracao.where(mes: params[:mes_de], sequencial: params[:sequencial_de])
+    extracaos = Extracao.where(grupo_id: params[:grupo_de], mes: params[:mes_de], sequencial: params[:sequencial_de])
     extracaos.each do |extracao|
       new_extracao                    = extracao.dup
       new_extracao.data               = params[:data]
       new_extracao.mes                = params[:mes_para]
       new_extracao.sequencial         = params[:sequencial_para]
+      new_extracao.grupo_id           = params[:grupo_para]
       new_extracao.dataemissao        = params[:dataemissao]
       new_extracao.datavencimento     = params[:datavencimento]
       new_extracao.dataateste         = params[:dataateste]
@@ -75,11 +77,11 @@ class ExtracaosController < ApplicationController
       new_extracao.save
     end
 
-    redirect_to edita_massa_extracaos_path(params[:data])
+    redirect_to edita_massa_extracaos_path(params[:mes_para], params[:sequencial_para], params[:grupo_para])
   end
 
   def edita_massa
-    @extracaos = Extracao.where(data: params[:id])
+    @extracaos = Extracao.where(mes: params[:mes], sequencial: params[:sequencial], grupo: params[:grupo])
   end
 
   def import    
@@ -161,7 +163,7 @@ class ExtracaosController < ApplicationController
   def update
     respond_to do |format|
       if @extracao.update(extracao_params)
-        format.html { redirect_to edita_massa_extracaos_path(@extracao.data), notice: 'Item Atualizado!' }
+        format.html { redirect_to edita_massa_extracaos_path(@extracao.mes, @extracao.sequencial, @extracao.grupo), notice: 'Item Atualizado!' }
       else
         format.html { render :edit }
       end
@@ -193,7 +195,7 @@ class ExtracaosController < ApplicationController
         :datapagamento, :dtemissaodocorigem, :numerodocorigem, 
         :situacao, :empenho, :valor, :contavpd, :centrodecusto, 
         :mes, :ano, :codigosiorg, :tipoob, :banco, :agencia, 
-        :contafavorecido, :contapagadora
+        :contafavorecido, :contapagadora, :grupo_id
         )
     end
   end

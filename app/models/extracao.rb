@@ -32,6 +32,8 @@ class Extracao < ApplicationRecord
 	
 	validates :credor, uniqueness: { scope: [:data, :sequencial], message: "O CPF não pode ser duplicado na data e sequencial"}
 
+	belongs_to :grupo
+
 	default_scope { order("data DESC, credor ASC") }
 
 	def getBanco

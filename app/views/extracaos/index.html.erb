@@ -21,6 +21,7 @@
             <% end %>
           <% end %>
         </th>
+        <th><%= sortable("grupo_id", "Grupo") %></th>
         <th><%= sortable("sequencial", "Sequencial") %></th>
         <th><%= sortable("banco", "Banco") %></th>
         <th><%= sortable("contafavorecido", "Conta") %></th>
@@ -34,6 +35,7 @@
       <% @extracaos.each do |extracao| %>
       <tr>
         <td><%= extracao.data.strftime("%d/%m/%Y") %></td>
+        <td><%= extracao.grupo.nome %></td>
         <td><%= extracao.sequencial %></td>
         <td><%= extracao.banco %></td>
         <td><%= extracao.contafavorecido %></td>

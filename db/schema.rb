@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190408123014) do
+ActiveRecord::Schema.define(version: 20190424123431) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,7 +25,6 @@ ActiveRecord::Schema.define(version: 20190408123014) do
   create_table "extracaos", force: :cascade do |t|
     t.integer "agenciaug", default: 694
     t.date "data"
-    t.integer "sequencialdata", default: 1
     t.integer "sequencial", default: 1
     t.integer "ug", default: 158327
     t.string "operador"
@@ -52,9 +51,17 @@ ActiveRecord::Schema.define(version: 20190408123014) do
     t.string "agencia"
     t.string "contafavorecido"
     t.string "contapagadora", default: "UNICA"
-    t.string "processoob"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "grupo_id", default: 1, null: false
+    t.index ["grupo_id"], name: "index_extracaos_on_grupo_id"
+  end
+
+  create_table "grupos", force: :cascade do |t|
+    t.string "nome", default: "G1", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "extracaos", "grupos"
 end

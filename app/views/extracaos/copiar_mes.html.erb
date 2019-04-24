@@ -9,6 +9,7 @@
 
       <div class="col-md-12">
         <div class="row">
+          <legend>De</legend>
           <div class="col-md-3">
             <%= label_tag :mes, "Mês De:" %>
             <br />
@@ -20,6 +21,17 @@
             <%= number_field_tag "sequencial_de", 1, style: "width: 70%", required: true %>
           </div>
           <div class="col-md-3">
+            <%= label_tag :grupo_de, "Grupo De:" %>
+            <br />
+            <%= select_tag("grupo_de", options_for_select(Grupo.all.collect {|x| [x.nome, x.id]}), {include_blank: false, required: true, style: "width: 50%;" }) %>
+          </div>
+        </div>
+
+        <br />
+
+        <div class="row">
+          <legend>Para</legend>
+          <div class="col-md-3">
             <%= label_tag :mes, "Mês Para:" %>
             <br />
             <%= number_field_tag "mes_para", Time.now.to_date.month+1, style: "width: 70%", required: true %>
@@ -29,28 +41,34 @@
             <br />
             <%= number_field_tag "sequencial_para", 1, style: "width: 70%", required: true %>
           </div>
+          <div class="col-md-3">
+            <%= label_tag :grupo_para, "Grupo Para:" %>
+            <br />
+            <%= select_tag("grupo_para", options_for_select(Grupo.all.collect {|x| [x.nome, x.id]}), {include_blank: false, required: true, style: "width: 50%;" }) %>
+          </div>          
         </div>
         
-        <hr />
+        <br />
 
         <div class="row">
+          <legend>Dados</legend>
 
           <div class="col-md-4">
             <%= label_tag :data, t(:data) %>
             <br />
-            <%= text_field_tag :data, nil, class: "col-md-7 date-inp", required: true %>
+            <%= text_field_tag :data, Time.now.to_date.strftime("%d/%m/%Y"), class: "col-md-7 date-inp", required: true %>
           </div>
 
           <div class="col-md-4">
             <%= label_tag :dataemissao, t(:dataemissao) %>
             <br />
-            <%= text_field_tag :dataemissao, nil, class: "col-md-7 date-inp", required: true %>
+            <%= text_field_tag :dataemissao, Time.now.to_date.strftime("%d/%m/%Y"), class: "col-md-7 date-inp", required: true %>
           </div>
 
           <div class="col-md-4">
             <%= label_tag :datavencimento, t(:datavencimento) %>
             <br />
-            <%= text_field_tag :datavencimento, nil, class: "col-md-7 date-inp", required: true %>
+            <%= text_field_tag :datavencimento, Time.now.to_date.strftime("%d/%m/%Y"), class: "col-md-7 date-inp", required: true %>
           </div>
 
         </div>
@@ -60,19 +78,19 @@
           <div class="col-md-4">
             <%= label_tag :dataateste, t(:dataateste) %>
             <br />
-            <%= text_field_tag :dataateste, nil, class: "col-md-7 date-inp", required: true %>
+            <%= text_field_tag :dataateste, Time.now.to_date.strftime("%d/%m/%Y"), class: "col-md-7 date-inp", required: true %>
           </div>
 
           <div class="col-md-4">
             <%= label_tag :datapagamento, t(:datapagamento) %>
             <br />
-            <%= text_field_tag :datapagamento, nil, class: "col-md-7 date-inp", required: true %>
+            <%= text_field_tag :datapagamento, Time.now.to_date.strftime("%d/%m/%Y"), class: "col-md-7 date-inp", required: true %>
           </div>
 
           <div class="col-md-4">
             <%= label_tag :dtemissaodocorigem, t(:dtemissaodocorigem) %>
             <br />
-            <%= text_field_tag :dtemissaodocorigem, nil, class: "col-md-7 date-inp", required: true %>
+            <%= text_field_tag :dtemissaodocorigem, Time.now.to_date.strftime("%d/%m/%Y"), class: "col-md-7 date-inp", required: true %>
           </div>
 
         </div>
@@ -82,13 +100,13 @@
           <div class="col-md-6">
             <%= label_tag :observacao, t(:observacao) %>
             <br />
-            <%= text_area_tag :observacao, nil, required: true %>
+            <%= text_area_tag :observacao, Extracao.first.observacao, required: true, cols: 50, rows: 5 %>
           </div>
 
           <div class="col-md-6">
             <%= label_tag :numerodocorigem, t(:numerodocorigem) %>
             <br />
-            <%= text_field_tag :numerodocorigem, nil, required: true %>
+            <%= text_field_tag :numerodocorigem, Extracao.first.numerodocorigem, required: true %>
           </div>
 
         </div>

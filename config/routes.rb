@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :grupos
 	root 'extracaos#index'
 
 	resources :bancos
@@ -12,7 +13,7 @@ Rails.application.routes.draw do
 			get 	:copiar_mes
 			post 	:copiar
 
-			get 	"edita_massa/:id" => 'extracaos#edita_massa', as: :edita_massa
+			get 	"edita_massa/:mes/:sequencial/:grupo" => 'extracaos#edita_massa', as: :edita_massa
 		end
 	end
 

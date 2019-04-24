@@ -37,7 +37,11 @@
 
       <tr style="<%= "color: red;" if extracao.contafavorecido == "0" and extracao.agencia == "0" %>">
         <td><%= "#{extracao.mes}/#{extracao.sequencial}" %></td>
-        <td><%= extracao.data.strftime("%d/%m/%Y") %></td>
+        <td>
+          <%= extracao.data.strftime("%d/%m/%Y") %>
+          <br />
+          <%= extracao.grupo.nome %>
+        </td>
         <td><%= extracao.dataemissao.strftime("%d/%m/%Y") %></td>
         <td><%= extracao.datavencimento.strftime("%d/%m/%Y") %></td>
         <td><%= extracao.dataateste.strftime("%d/%m/%Y") %></td>
