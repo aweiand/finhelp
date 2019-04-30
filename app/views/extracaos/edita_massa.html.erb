@@ -114,14 +114,14 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th>Mês<br />Seq</th>
-        <th>Data</th>
-        <th>Banco</th>
-        <th>Agência</th>
-        <th>Conta</th>
-        <th>Credor/CPF</th>
-        <th>Valor</th>
-        <th></th>
+        <th style="width: 10%">Mês<br />Seq</th>
+        <th style="width: 10%">Data</th>
+        <th style="width: 10%">Banco</th>
+        <th style="width: 10%">Agência</th>
+        <th style="width: 15%">Conta</th>
+        <th style="width: 20%">Credor/CPF</th>
+        <th style="width: 10%">Valor</th>
+        <th style="width: 15%"></th>
       </tr>
     </thead>
 
@@ -136,20 +136,28 @@
         <td>
           <%= extracao.data.strftime("%d/%m/%Y") %> (<%= extracao.grupo.nome %>)
         </td>
-        <td class="col-md-2">
+        <td>
           <%= form.select(:banco, options_for_select(Banco.all.map {|x| [x.fullname, x.codigo]}, form.object.banco), {include_blank: true}, { class: 'form-control', id: :banco}) %>
         </td>
         <td>
-          <%= form.text_field :agencia, class: "form-control" %>
+          <div style="width: 50%">
+            <%= form.text_field :agencia, class: "form-control" %>
+          </div>
         </td>
         <td>
-          <%= form.text_field :contafavorecido, class: "form-control" %>
+          <div style="width: 75%">
+            <%= form.text_field :contafavorecido, class: "form-control" %>
+          </div>
         </td>
         <td>
           <%= humanCPF(extracao.credor) %><br />
           <span style="font-size: 8px;"><%= extracao.credor %></span>
         </td>
-        <td><%= form.text_field :valor, class: "form-control" %></td>
+        <td>
+          <div style="width: 80%">
+            <%= form.text_field :valor, class: "form-control" %>
+          </div>
+        </td>
         <td>
           <%= button_tag(class: "btn btn-xs btn-primary") do %>
           <i class='fa fa-save'></i>
