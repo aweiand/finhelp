@@ -1,5 +1,5 @@
 <% unless notice.blank? %>
-  <p id="notice" class="alert alert-danger"><%= notice %></p>
+<p id="notice" class="alert alert-danger"><%= notice %></p>
 <% end %>
 
 <div class="page-header">
@@ -8,9 +8,105 @@
   </h3>
 </div>
 
-<%= render "generatexml" %>
 
-<div class="pull-left">
+<div class="row">
+
+
+  <div class="col-md-8">
+    <legend>Editar Campos em Massa</legend>
+
+    <%= form_with(model: @extracaos.first, local: true, url: salva_edita_massa_extracaos_path(@extracaos.first), method: :put, html: {class: "form-horizontal"}) do |form| %>
+    <%= form.hidden_field :grupo_id %>
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingOne">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+              Dados Comuns
+            </a>
+          </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            <%= render "/extracaos/partials/form_dadoscomuns", form: form %>
+
+            <div class="col-md-12 text-center">
+              <%= form.submit(t(:save), class: "btn btn-sm btn-primary") %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingTwo">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              Datas
+            </a>
+          </h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            <%= render "/extracaos/partials/form_datas", form: form %>
+            <div class="col-md-12 text-center">
+              <%= form.submit(t(:save), class: "btn btn-sm btn-primary") %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingThree">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              Dados do Documento
+            </a>
+          </h4>
+        </div>
+        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            <%= render "/extracaos/partials/form_dadosdodoc", form: form %>
+            <div class="col-md-12 text-center">
+              <%= form.submit(t(:save), class: "btn btn-sm btn-primary") %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingFour">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+              Dados do Bancários
+            </a>
+          </h4>
+        </div>
+        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+          <div class="panel-body">
+            <div class="form-group col-md-4">
+              <%= form.label :valor, class: 'col-md-2 control-label' %>
+              <div class="col-md-4">
+                <%= form.text_field :valor, class: "form-control" %>
+              </div>
+            </div>
+
+            <div class="col-md-12 text-center">
+              <%= form.submit(t(:save), class: "btn btn-sm btn-primary") %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+    <% end %>
+  </div>
+
+  <%= render "generatexml" %>
+</div>
+
+<div class="col-md-12 pull-right">
   <%= link_to 'Novo Registro', new_extracao_path, class: "btn btn-primary", style: "color: #FFF" %>
 </div>
 
@@ -20,42 +116,57 @@
       <tr>
         <th>Mês<br />Seq</th>
         <th>Data</th>
-        <th>Emissão</th>
-        <th>Vencimento</th>
-        <th>Ateste</th>
-        <th>Pagamento</th>
-        <th>Doc Origem</th>
-        <th style="width: 20%;">Obs</th>
-        <th>Num Origem</th>
+        <th>Banco</th>
+        <th>Agência</th>
+        <th>Conta</th>
         <th>Credor/CPF</th>
+        <th>Valor</th>
         <th></th>
       </tr>
     </thead>
 
     <tbody>
+
       <% @extracaos.each do |extracao| %>
+
+      <%= form_with(model: extracao, remote: true, html: {class: "form-horizontal"}) do |form| %>
 
       <tr style="<%= "color: red;" if extracao.contafavorecido == "0" and extracao.agencia == "0" %>">
         <td><%= "#{extracao.mes}/#{extracao.sequencial}" %></td>
         <td>
-          <%= extracao.data.strftime("%d/%m/%Y") %>
-          <br />
-          <%= extracao.grupo.nome %>
+          <%= extracao.data.strftime("%d/%m/%Y") %> (<%= extracao.grupo.nome %>)
         </td>
-        <td><%= extracao.dataemissao.strftime("%d/%m/%Y") %></td>
-        <td><%= extracao.datavencimento.strftime("%d/%m/%Y") %></td>
-        <td><%= extracao.dataateste.strftime("%d/%m/%Y") %></td>
-        <td><%= extracao.datapagamento.strftime("%d/%m/%Y") %></td>
-        <td><%= extracao.dtemissaodocorigem.strftime("%d/%m/%Y") %></td>
-        <td><%= extracao.observacao %></td>
-        <td><%= extracao.numerodocorigem %></td>
-        <td><%= humanCPF(extracao.credor) %></td>
+        <td class="col-md-2">
+          <%= form.select(:banco, options_for_select(Banco.all.map {|x| [x.fullname, x.codigo]}, form.object.banco), {include_blank: true}, { class: 'form-control', id: :banco}) %>
+        </td>
         <td>
-          <%= link_to 'Editar', edit_extracao_path(extracao), class: "btn btn-xs btn-warning" %>
-          &nbsp;          &nbsp;          &nbsp;
-          <%= link_to 'Remover', extracao, method: :delete, data: { confirm: 'Tem Certeza?' }, class: 'btn btn-xs btn-danger' %>
+          <%= form.text_field :agencia, class: "form-control" %>
+        </td>
+        <td>
+          <%= form.text_field :contafavorecido, class: "form-control" %>
+        </td>
+        <td>
+          <%= humanCPF(extracao.credor) %><br />
+          <span style="font-size: 8px;"><%= extracao.credor %></span>
+        </td>
+        <td><%= form.text_field :valor, class: "form-control" %></td>
+        <td>
+          <%= button_tag(class: "btn btn-xs btn-primary") do %>
+          <i class='fa fa-save'></i>
+          <% end %>
+
+          <%= link_to edit_extracao_path(extracao), class: "btn btn-xs btn-warning" do %>
+          <i class='fa fa-edit'></i>
+          <% end %>
+
+          <%= link_to extracao, method: :delete, data: { confirm: 'Tem Certeza?' }, class: 'btn btn-xs btn-danger' do %>
+          <i class='fa fa-user-times'></i>
+          <% end %>
         </td>
       </tr>
+
+      <% end %>
+
       <% end %>
     </tbody>
   </table>

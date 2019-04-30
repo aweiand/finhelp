@@ -84,6 +84,39 @@ class ExtracaosController < ApplicationController
     @extracaos = Extracao.where(mes: params[:mes], sequencial: params[:sequencial], grupo: params[:grupo])
   end
 
+  def salva_edita_massa
+    extracaos = Extracao.where(mes: extracao_params[:mes], sequencial: extracao_params[:sequencial], grupo: extracao_params[:grupo_id])
+
+    extracaos.update_all({
+      ug:            extracao_params[:ug],
+      agenciaug:     extracao_params[:agenciaug],
+      mes:           extracao_params[:mes],
+      ano:           extracao_params[:ano],
+      data:          extracao_params[:data],
+      sequencial:    extracao_params[:sequencial],
+      operador:      extracao_params[:operador],
+      dataemissao:   extracao_params[:dataemissao],
+      datavencimento: extracao_params[:datavencimento],
+      dataateste:    extracao_params[:dataateste],
+      datapagamento: extracao_params[:datapagamento],
+      dtemissaodocorigem: extracao_params[:dtemissaodocorigem],
+      observacao:         extracao_params[:observacao],
+      processodh:         extracao_params[:processodh],
+      numerodocorigem:    extracao_params[:numerodocorigem],
+      situacao:           extracao_params[:situacao],
+      empenho:            extracao_params[:empenho],
+      contavpd:           extracao_params[:contavpd],
+      centrodecusto:      extracao_params[:centrodecusto],
+      codigosiorg:        extracao_params[:codigosiorg],
+      tipoob:             extracao_params[:tipoob],
+      tipodh:             extracao_params[:tipodh],
+      contapagadora:      extracao_params[:contapagadora],
+      valor:              extracao_params[:valor]
+    })
+
+    redirect_to edita_massa_extracaos_path(extracao_params[:mes], extracao_params[:sequencial], extracao_params[:grupo_id])
+  end
+
   def import    
   end
 

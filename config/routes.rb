@@ -3,8 +3,9 @@ Rails.application.routes.draw do
 	root 'extracaos#index'
 
 	resources :bancos
+
 	resources :extracaos do 
-		collection do
+		collection do			
 			get 	:import
 			post	:importer
 
@@ -13,7 +14,8 @@ Rails.application.routes.draw do
 			get 	:copiar_mes
 			post 	:copiar
 
-			get 	"edita_massa/:mes/:sequencial/:grupo" => 'extracaos#edita_massa', as: :edita_massa
+			get 	"edita_massa/:mes/:sequencial/:grupo" 	=> 'extracaos#edita_massa', 		as: :edita_massa
+			put		"salva_edita_massa/:id"					=> 'extracaos#salva_edita_massa', 	as: :salva_edita_massa
 		end
 	end
 
