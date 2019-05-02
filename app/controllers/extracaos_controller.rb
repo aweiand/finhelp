@@ -21,7 +21,9 @@ class ExtracaosController < ApplicationController
     @filename = @extracaos.first.data.strftime("%d-%m-%Y").to_s + "_" + @extracaos.first.sequencial.to_s
 
     respond_to do |format|
-      format.xml
+      format.xml  {
+        response.headers['Content-Disposition'] = "attachment; filename=#{@filename}.xml"
+      }
       format.xlsx {
         response.headers['Content-Disposition'] = "attachment; filename=#{@filename}.xlsx"
       }
