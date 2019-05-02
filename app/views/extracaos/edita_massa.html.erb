@@ -132,7 +132,13 @@
       <%= form_with(model: extracao, remote: true, html: {class: "form-horizontal"}) do |form| %>
 
       <tr style="<%= "color: red;" if extracao.contafavorecido == "0" and extracao.agencia == "0" %>">
-        <td><%= "#{extracao.mes}/#{extracao.sequencial}" %></td>
+        <td>
+          <%= "#{extracao.mes}/#{extracao.sequencial}" %>
+          <% if extracao.contafavorecido == "0" and extracao.agencia == "0" %>
+          <br />
+          <i class="fa fa-ban"></i> <span style="color: red; font-size: 10px;">SUSPENSO</span>
+          <% end %>
+        </td>
         <td>
           <%= extracao.data.strftime("%d/%m/%Y") %> (<%= extracao.grupo.nome %>)
         </td>
@@ -179,3 +185,11 @@
     </tbody>
   </table>
 </div>
+
+<script type="text/javascript">
+  $(function(){
+    $(document).on('change', 'input', function() {
+      $(this).parent().addClass("bg-danger");
+    });
+  })
+</script>
