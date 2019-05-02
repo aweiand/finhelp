@@ -73,6 +73,7 @@ class ExtracaosController < ApplicationController
       new_extracao.dtemissaodocorigem = params[:dtemissaodocorigem]
       new_extracao.observacao         = params[:observacao]
       new_extracao.numerodocorigem    = params[:numerodocorigem]
+      new_extracao.visto              = false
 
       new_extracao.save
     end
@@ -171,6 +172,7 @@ class ExtracaosController < ApplicationController
       tmp.agencia           = numdomibancfav.xpath("agencia").text
       tmp.contafavorecido   = numdomibancfav.xpath("conta").text
       tmp.contapagadora     = contapagadora.xpath("conta").text
+      tmp.visto             = true
 
       tmp.save
     end
@@ -198,7 +200,7 @@ class ExtracaosController < ApplicationController
   def update
     respond_to do |format|
       if @extracao.update(extracao_params)
-        format.html { redirect_to edita_massa_extracaos_path(@extracao.mes, @extracao.sequencial, @extracao.grupo), notice: 'Item Atualizado!' }
+        format.html { redirect_to edita_massa_extracaos_path(@extracao.mes, @extracao.sequencial, @extracao.grupo)+'?#'+@extracao.id.to_s, notice: 'Item Atualizado!' }
       else
         format.html { render :edit }
       end
@@ -230,7 +232,7 @@ class ExtracaosController < ApplicationController
         :datapagamento, :dtemissaodocorigem, :numerodocorigem, 
         :situacao, :empenho, :valor, :contavpd, :centrodecusto, 
         :mes, :ano, :codigosiorg, :tipoob, :banco, :agencia, 
-        :contafavorecido, :contapagadora, :grupo_id
+        :contafavorecido, :contapagadora, :grupo_id, :visto
         )
     end
   end

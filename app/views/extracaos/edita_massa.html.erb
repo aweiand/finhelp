@@ -85,9 +85,12 @@
         <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
           <div class="panel-body">
             <div class="form-group col-md-4">
-              <%= form.label :valor, class: 'col-md-2 control-label' %>
-              <div class="col-md-4">
-                <%= form.text_field :valor, class: "form-control" %>
+              <%= form.label :valor, "Valor", class: 'col-md-4 control-label' %>
+              <div class="col-md-6">
+                <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon1"><i class="fa fa-dollar"></i></span>
+                  <%= form.text_field :valor, class: "form-control" %>
+                </div>
               </div>
             </div>
 
@@ -106,8 +109,21 @@
   <%= render "generatexml" %>
 </div>
 
-<div class="col-md-12 pull-right">
-  <%= link_to 'Novo Registro', new_extracao_path, class: "btn btn-primary", style: "color: #FFF" %>
+<div class="row">
+  <div class="col-md-6">
+    <div class="col-md-4" style="padding-left: 0px;">
+      <div class="panel panel-teal panel-widget">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1"><i class="fa fa-search"></i></span>
+          <input type="text" class="input-search form-control" alt="table" placeholder="Buscar CPF" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <%= link_to 'Novo Registro', new_extracao_path, class: "btn btn-primary pull-right", style: "color: #FFF" %>
+  </div>
 </div>
 
 <div class="table-responsive">
@@ -129,58 +145,64 @@
 
       <% @extracaos.each do |extracao| %>
 
-      <%= form_with(model: extracao, remote: true, html: {class: "form-horizontal"}) do |form| %>
+        <%= form_with(model: extracao, remote: false, local: true, html: {class: "form-horizontal"}) do |form| %>
 
-      <tr style="<%= "color: red;" if extracao.contafavorecido == "0" and extracao.agencia == "0" %>">
-        <td>
-          <%= "#{extracao.mes}/#{extracao.sequencial}" %>
-          <% if extracao.contafavorecido == "0" and extracao.agencia == "0" %>
-          <br />
-          <i class="fa fa-ban"></i> <span style="color: red; font-size: 10px;">SUSPENSO</span>
-          <% end %>
-        </td>
-        <td>
-          <%= extracao.data.strftime("%d/%m/%Y") %> (<%= extracao.grupo.nome %>)
-        </td>
-        <td>
-          <%= form.select(:banco, options_for_select(Banco.all.map {|x| [x.fullname, x.codigo]}, form.object.banco), {include_blank: true}, { class: 'form-control', id: :banco}) %>
-        </td>
-        <td>
-          <div style="width: 50%">
-            <%= form.text_field :agencia, class: "form-control" %>
-          </div>
-        </td>
-        <td>
-          <div style="width: 75%">
-            <%= form.text_field :contafavorecido, class: "form-control" %>
-          </div>
-        </td>
-        <td>
-          <%= humanCPF(extracao.credor) %><br />
-          <span style="font-size: 8px;"><%= extracao.credor %></span>
-        </td>
-        <td>
-          <div style="width: 80%">
-            <%= form.text_field :valor, class: "form-control" %>
-          </div>
-        </td>
-        <td>
-          <%= button_tag(class: "btn btn-xs btn-primary") do %>
-          <i class='fa fa-save'></i>
-          <% end %>
+        <tr id="<%= extracao.id %>" style="<%= "color: red;" if extracao.contafavorecido == "0" and extracao.agencia == "0" %>">
+          <td>
+            <%= "#{extracao.mes}/#{extracao.sequencial}" %>
+            <% if extracao.contafavorecido == "0" and extracao.agencia == "0" %>
+            <br />
+            <i class="fa fa-ban"></i> <span style="color: red; font-size: 10px;">SUSPENSO</span>
+            <% end %>
+          </td>
+          <td>
+            <%= extracao.data.strftime("%d/%m/%Y") %> (<%= extracao.grupo.nome %>)
+          </td>
+          <td>
+            <%= form.select(:banco, options_for_select(Banco.all.map {|x| [x.fullname, x.codigo]}, form.object.banco), {include_blank: true}, { class: 'form-control', id: :banco}) %>
+          </td>
+          <td>
+            <div style="width: 50%">
+              <%= form.text_field :agencia, class: "form-control" %>
+            </div>
+          </td>
+          <td>
+            <div style="width: 75%">
+              <%= form.text_field :contafavorecido, class: "form-control" %>
+            </div>
+          </td>
+          <td>
+            <div class="col-md-2">
+              <%= form.check_box :visto, class: "form-control" %>
+            </div>
 
-          <%= link_to edit_extracao_path(extracao), class: "btn btn-xs btn-warning" do %>
-          <i class='fa fa-edit'></i>
-          <% end %>
+            <%= humanCPF(extracao.credor) %><br />
+            <span style="font-size: 8px;"><%= extracao.credor %></span>
+          </td>
+          <td>
+            <div style="width: 80%">
+              <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-dollar"></i></span>
+                <%= form.text_field :valor, class: "form-control" %>
+              </div>
+            </div>
+          </td>
+          <td>
+            <%= button_tag(class: "btn btn-xs btn-primary") do %>
+            <i class='fa fa-save'></i>
+            <% end %>
 
-          <%= link_to extracao, method: :delete, data: { confirm: 'Tem Certeza?' }, class: 'btn btn-xs btn-danger' do %>
-          <i class='fa fa-user-times'></i>
-          <% end %>
-        </td>
-      </tr>
+            <%= link_to edit_extracao_path(extracao), class: "btn btn-xs btn-warning" do %>
+            <i class='fa fa-edit'></i>
+            <% end %>
 
-      <% end %>
+            <%= link_to extracao, method: :delete, data: { confirm: 'Tem Certeza?' }, class: 'btn btn-xs btn-danger' do %>
+            <i class='fa fa-user-times'></i>
+            <% end %>
+          </td>
+        </tr>
 
+        <% end %>
       <% end %>
     </tbody>
   </table>
@@ -188,8 +210,25 @@
 
 <script type="text/javascript">
   $(function(){
-    $(document).on('change', 'input', function() {
+    $('table').on('change', 'input, select', function() {
       $(this).parent().addClass("bg-danger");
     });
+
+    $(".input-search").keyup(function(){
+      //pega o css da tabela 
+      var tabela = $(this).attr('alt');
+      if( $(this).val() != ""){
+        $("."+tabela+" tbody>tr").hide();
+        $("."+tabela+" td:contains-ci('" + $(this).val() + "')").parent("tr").show();
+      } else{
+        $("."+tabela+" tbody>tr").show();
+      }
+    }); 
+  });
+
+  $.extend($.expr[":"], {
+    "contains-ci": function(elem, i, match, array) {
+      return (elem.textContent || elem.innerText || $(elem).text() || "").toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+    }
   })
 </script>
