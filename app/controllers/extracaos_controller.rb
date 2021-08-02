@@ -9,6 +9,7 @@ class ExtracaosController < ApplicationController
 
     @extracaos = Extracao.where({
       mes:           params[:search][:mes],
+      ano: 	     Time.now.year,
       sequencial:    params[:search][:sequencial],
       grupo:         params[:search][:grupo_id]
     })
@@ -61,11 +62,12 @@ class ExtracaosController < ApplicationController
   end
 
   def copiar
-    extracaos = Extracao.where(grupo_id: params[:grupo_de], mes: params[:mes_de], sequencial: params[:sequencial_de])
+    extracaos = Extracao.where(grupo_id: params[:grupo_de], mes: params[:mes_de], ano: Time.now.year, sequencial: params[:sequencial_de])
     extracaos.each do |extracao|
       new_extracao                    = extracao.dup
       new_extracao.data               = params[:data]
       new_extracao.mes                = params[:mes_para]
+      new_extracao.ano		      = Time.now.year
       new_extracao.sequencial         = params[:sequencial_para]
       new_extracao.grupo_id           = params[:grupo_para]
       new_extracao.dataemissao        = params[:dataemissao]
