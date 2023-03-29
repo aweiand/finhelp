@@ -70,7 +70,7 @@ gem "font-awesome-rails"
 
 # JavaScript Rails Routes
 # https://github.com/railsware/js-routes
-gem "js-routes"
+gem "js-routes", '1.4.9'
 
 gem "jquery-rails"
 gem "jquery-ui-rails"

@@ -62,12 +62,14 @@ class ExtracaosController < ApplicationController
   end
 
   def copiar
+    errors = []
+
     extracaos = Extracao.where(grupo_id: params[:grupo_de], mes: params[:mes_de], ano: Time.now.year, sequencial: params[:sequencial_de])
     extracaos.each do |extracao|
       new_extracao                    = extracao.dup
       new_extracao.data               = params[:data]
       new_extracao.mes                = params[:mes_para]
-      new_extracao.ano		      = Time.now.year
+      new_extracao.ano		            = Time.now.year
       new_extracao.sequencial         = params[:sequencial_para]
       new_extracao.grupo_id           = params[:grupo_para]
       new_extracao.dataemissao        = params[:dataemissao]
@@ -79,14 +81,28 @@ class ExtracaosController < ApplicationController
       new_extracao.numerodocorigem    = params[:numerodocorigem]
       new_extracao.visto              = false
 
-      new_extracao.save
+      unless (new_extracao.save)
+        errors << new_extracao.errors.full_messages.to_s
+        next
+      end
     end
 
-    redirect_to edita_massa_extracaos_path(params[:mes_para], params[:sequencial_para], params[:grupo_para])
+    if (errors.length != 0)
+      logger.fatal errors.to_s
+      flash[:notice] = "Não foi possível duplicar, verifique os dados fornecidos e tente novamente"
+      redirect_to root_path(errors: errors.to_s)
+    else
+      redirect_to edita_massa_extracaos_path(params[:mes_para], params[:sequencial_para], params[:grupo_para])
+    end
   end
 
   def edita_massa
     @extracaos = Extracao.where(mes: params[:mes], sequencial: params[:sequencial], grupo: params[:grupo])
+
+    if @extracaos.count == 0
+      flash[:notice] = "Não foi encontrado nenhum registro com os parâmetros especificados"
+      redirect_to root_path
+    end
   end
 
   def salva_edita_massa
@@ -119,6 +135,7 @@ class ExtracaosController < ApplicationController
       valor:              extracao_params[:valor]
     })
 
+    flash[:notice] = ""
     redirect_to edita_massa_extracaos_path(extracao_params[:mes], extracao_params[:sequencial], extracao_params[:grupo_id])
   end
 
