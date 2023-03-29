@@ -63,7 +63,6 @@ class ExtracaosController < ApplicationController
 
   def copiar
     errors = []
-
     extracaos = Extracao.where(grupo_id: params[:grupo_de], mes: params[:mes_de], ano: Time.now.year, sequencial: params[:sequencial_de])
     extracaos.each do |extracao|
       new_extracao                    = extracao.dup
@@ -106,7 +105,8 @@ class ExtracaosController < ApplicationController
   end
 
   def salva_edita_massa
-    extracaos = Extracao.where(mes: extracao_params[:mes], sequencial: extracao_params[:sequencial], grupo: extracao_params[:grupo_id])
+    base = Extracao.find(params[:id])
+    extracaos = Extracao.where(mes: base.mes, sequencial: base.sequencial, grupo: base.grupo_id)
 
     extracaos.update_all({
       ug:            extracao_params[:ug],
