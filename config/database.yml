@@ -3,13 +3,13 @@ default: &default
   encoding: unicode
   port: 5432
   pool: 5
-  host: localhost
+  host: <%= ENV['DEV_HOST'] %>
   username: <%= ENV['DEV_USERNAME'] %>
   password: <%= ENV['DEV_PASSWORD'] %>
 
 development:
   <<: *default
-  database: finhelp_dev
+  database: <%= ENV['DEV_DATABASE'] %>
 
 test:
   <<: *default
@@ -17,7 +17,7 @@ test:
 
 production:
   <<: *default
-  database: finhelp
+  database: <%= ENV['PROD_DATABASE'] %>
   host: <%= ENV['PROD_HOST'] %>
   username: <%= ENV['PROD_USERNAME'] %>
   password: <%= ENV['PROD_USERNAME'] %>  
