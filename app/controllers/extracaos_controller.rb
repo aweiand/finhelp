@@ -221,8 +221,10 @@ class ExtracaosController < ApplicationController
   def update
     respond_to do |format|
       if @extracao.update(extracao_params)
+        format.json { render json: { status: 'info', notice: 'Item Atualizado!', id: @extracao.id } }
         format.html { redirect_to edita_massa_extracaos_path(@extracao.mes, @extracao.sequencial, @extracao.grupo)+'?#'+@extracao.id.to_s, notice: 'Item Atualizado!' }
       else
+        format.json { render json: { status: 'danger', notice: 'Houve um problema ao atualizar!', id: @extracao.id } }
         format.html { render :edit }
       end
     end
@@ -231,10 +233,11 @@ class ExtracaosController < ApplicationController
   # DELETE /extracaos/1
   # DELETE /extracaos/1.json
   def destroy
+    extracao = @extracao
     @extracao.destroy
     respond_to do |format|
-      format.html { redirect_to extracaos_url, notice: 'Item Destruído!' }
-      format.json { head :no_content }
+      format.html { redirect_to edita_massa_extracaos_path(extracao.mes, extracao.sequencial, extracao.grupo_id), notice: 'Item Destruído!' }
+      format.json { render json: { status: 'info', notice: 'Removido com sucesso!', id: extracao.id } }
     end
   end
 

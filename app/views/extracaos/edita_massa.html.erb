@@ -145,7 +145,7 @@
 
       <% @extracaos.each do |extracao| %>
 
-        <%= form_with(model: extracao, remote: false, local: true, html: {class: "form-horizontal"}) do |form| %>
+        <%= form_with(model: extracao, remote: true, local: false, format: :json, html: {class: "form-horizontal formDatas"}) do |form| %>
 
         <tr id="<%= extracao.id %>" style="<%= "color: red;" if extracao.contafavorecido == "0" and extracao.agencia == "0" %>">
           <td>
@@ -196,7 +196,7 @@
             <i class='fa fa-edit'></i>
             <% end %>
 
-            <%= link_to extracao, method: :delete, data: { confirm: 'Tem Certeza?' }, class: 'btn btn-xs btn-danger' do %>
+            <%= link_to extracao, method: :delete, remote: true, data: { confirm: 'Tem Certeza?' }, class: 'btn btn-xs btn-danger btnRemove' do %>
             <i class='fa fa-user-times'></i>
             <% end %>
           </td>
@@ -224,6 +224,26 @@
         $("."+tabela+" tbody>tr").show();
       }
     }); 
+
+    $(".formDatas").on("ajax:success", function(event){
+      [data, status, xhr] = event.detail;
+      $.notify({
+          title: data.notice,
+          message: data.notice,
+        },{
+          type: data.status,
+          allow_dismiss: true,
+          timer: 10
+        },
+      );
+
+      $("tr#" + data.id).find('.bg-danger').each(function(e){
+        $(this).removeClass('bg-danger');
+      });
+      
+      return false;
+    });
+
   });
 
   $.extend($.expr[":"], {

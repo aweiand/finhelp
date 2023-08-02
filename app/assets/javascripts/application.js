@@ -16,6 +16,9 @@
 //= require turbolinks
 //= require js-routes
 //= require bootstrap-sprockets
+
+//= require bootstrap4-notify/bootstrap-notify.min.js
+
 //= require_tree .
 
 function remove_fields(link) {

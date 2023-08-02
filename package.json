@@ -1,5 +1,7 @@
 {
   "name": "finhelp",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "bootstrap4-notify": "^4.0.3"
+  }
 }
