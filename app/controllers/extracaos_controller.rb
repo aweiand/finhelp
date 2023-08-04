@@ -5,6 +5,16 @@ class ExtracaosController < ApplicationController
     if (params[:format] == "edit")
       redirect_to edita_massa_extracaos_path(params[:search][:mes], params[:search][:sequencial], params[:search][:grupo_id])
       return
+    elsif (params[:format] == "bulk_destroy")
+      @extracaos = Extracao.where({
+        mes:           params[:search][:mes],
+        ano: 	     Time.now.year,
+        sequencial:    params[:search][:sequencial],
+        grupo:         params[:search][:grupo_id]
+      })
+      @extracaos.destroy_all
+      redirect_to root_path(notice: "Itens removidos")
+      return
     end
 
     @extracaos = Extracao.where({
@@ -221,10 +231,10 @@ class ExtracaosController < ApplicationController
   def update
     respond_to do |format|
       if @extracao.update(extracao_params)
-        format.json { render json: { status: 'info', notice: 'Item Atualizado!', id: @extracao.id } }
+        format.json { render json: { status: 'info', notice: 'Item Atualizado!', id: @extracao.id, method: 'update' } }
         format.html { redirect_to edita_massa_extracaos_path(@extracao.mes, @extracao.sequencial, @extracao.grupo)+'?#'+@extracao.id.to_s, notice: 'Item Atualizado!' }
       else
-        format.json { render json: { status: 'danger', notice: 'Houve um problema ao atualizar!', id: @extracao.id } }
+        format.json { render json: { status: 'danger', notice: 'Houve um problema ao atualizar!', id: @extracao.id, method: 'update' } }
         format.html { render :edit }
       end
     end
@@ -237,7 +247,7 @@ class ExtracaosController < ApplicationController
     @extracao.destroy
     respond_to do |format|
       format.html { redirect_to edita_massa_extracaos_path(extracao.mes, extracao.sequencial, extracao.grupo_id), notice: 'Item Destruído!' }
-      format.json { render json: { status: 'info', notice: 'Removido com sucesso!', id: extracao.id } }
+      format.json { render json: { status: 'info', notice: 'Removido com sucesso!', id: extracao.id, method: 'destroy' } }
     end
   end
 

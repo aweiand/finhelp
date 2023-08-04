@@ -237,9 +237,16 @@
         },
       );
 
-      $("tr#" + data.id).find('.bg-danger').each(function(e){
-        $(this).removeClass('bg-danger');
-      });
+      var $tr = $("tr#" + data.id);
+      if (data.method == 'destroy'){
+        $tr.hide('slow', function(){ 
+          this.remove(); 
+        });
+      } else if (data.method == 'update'){
+        $tr.find('.bg-danger').each(function(e){
+          $(this).removeClass('bg-danger');
+        });
+      }
       
       return false;
     });
