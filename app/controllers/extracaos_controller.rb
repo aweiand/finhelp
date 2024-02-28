@@ -73,12 +73,12 @@ class ExtracaosController < ApplicationController
 
   def copiar
     errors = []
-    extracaos = Extracao.where(grupo_id: params[:grupo_de], mes: params[:mes_de], ano: Time.now.year, sequencial: params[:sequencial_de])
+    extracaos = Extracao.where(grupo_id: params[:grupo_de], mes: params[:mes_de], ano: params[:ano_de], sequencial: params[:sequencial_de])
     extracaos.each do |extracao|
       new_extracao                    = extracao.dup
       new_extracao.data               = params[:data]
       new_extracao.mes                = params[:mes_para]
-      new_extracao.ano		            = Time.now.year
+      new_extracao.ano		            = params[:ano_para]
       new_extracao.sequencial         = params[:sequencial_para]
       new_extracao.grupo_id           = params[:grupo_para]
       new_extracao.dataemissao        = params[:dataemissao]
@@ -249,6 +249,12 @@ class ExtracaosController < ApplicationController
       format.html { redirect_to edita_massa_extracaos_path(extracao.mes, extracao.sequencial, extracao.grupo_id), notice: 'Item Destruído!' }
       format.json { render json: { status: 'info', notice: 'Removido com sucesso!', id: extracao.id, method: 'destroy' } }
     end
+  end
+
+  def contagem
+    @extracaos = Extracao.where(grupo_id: params[:grupo_de], mes: params[:mes_de], ano: params[:ano_de], sequencial: params[:sequencial_de])
+
+    render json: { conta: @extracaos.count }
   end
 
   private

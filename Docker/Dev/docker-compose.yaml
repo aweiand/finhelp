@@ -1,0 +1,37 @@
+# To start:: docker-compose -f Docker/Dev/docker-compose.yaml up 
+
+version: '3'
+services: 
+  db:
+    image: postgis/postgis:14-3.3
+    restart: always
+    environment:
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: finhelp
+    ports:  
+      - "5432:5432"      
+    volumes: 
+      - "../../../DockerPostgres/dbdata:/var/lib/postgresql/data"
+    networks:
+      default: {}
+
+
+  plan:
+    # restart: always
+    build: .
+    # command: bundle install && bundle exec rails s -p 3000 -b '0.0.0.0'
+    ports:  
+      - "3000:3000"
+    volumes: 
+      - ../../.:/var/www
+    depends_on: 
+      - db
+    networks:
+      default: {}
+
+
+networks:
+  default:
+    name: database
+    attachable: true

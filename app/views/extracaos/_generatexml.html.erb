@@ -23,13 +23,13 @@
 			</div>
 
 			<div class="form-group col-md-12 text-center">
-				<%= label_tag :format, t(:formato) %>
-				<%= select_tag("format", options_for_select(["xml", "xlsx", ["Editar em Massa", "edit"], ["Remover em Massa", "bulk_destroy"]]), {class: 'form-control'}) %>
+				<%= label_tag :format, t(:action) %>
+				<%= select_tag("format", options_for_select(["Gerar xml", "xlsx", ["Editar em Massa", "edit"], ["Remover em Massa", "bulk_destroy"]]), {class: 'form-control'}) %>
 			</div>
 		</div>
 
 		<div class="panel-footer text-center">
-			<%= submit_tag("Gerar", class: "btn btn-sm btn-primary") %>
+			<%= submit_tag("Executar", class: "btn btn-sm btn-primary") %>
 		</div>
 		<% end %>
 	</div>

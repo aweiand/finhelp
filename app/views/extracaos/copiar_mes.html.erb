@@ -10,20 +10,30 @@
       <div class="col-md-12">
         <div class="row">
           <legend>De</legend>
-          <div class="col-md-3">
+          <div class="col-md-2">
             <%= label_tag :mes, "Mês De:" %>
             <br />
-            <%= number_field_tag "mes_de", Time.now.to_date.month, style: "width: 70%", required: true %>
+            <%= number_field_tag "mes_de", Time.now.to_date.month, style: "width: 70%", required: true, class: "reloadme" %>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-2">
+            <%= label_tag :ano, "Ano De:" %>
+            <br />
+            <%= number_field_tag "ano_de", Time.now.to_date.year, style: "width: 70%", required: true, class: "reloadme" %>
+          </div>
+          <div class="col-md-2">
             <%= label_tag :sequencial, "Seq De:" %>
             <br />
-            <%= number_field_tag "sequencial_de", 1, style: "width: 70%", required: true %>
+            <%= number_field_tag "sequencial_de", 1, style: "width: 70%", required: true, class: "reloadme" %>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-5">
             <%= label_tag :grupo_de, "Grupo De:" %>
             <br />
-            <%= select_tag("grupo_de", options_for_select(Grupo.all.collect {|x| [x.nome, x.id]}), {include_blank: false, required: true, style: "width: 50%;" }) %>
+            <%= select_tag("grupo_de", options_for_select(Grupo.all.collect {|x| [x.nome, x.id]}), {include_blank: false, required: true, style: "width: 50%;", class: "reloadme" }) %>
+          </div>
+
+          <div class="col-md-2">
+            <%= label_tag :grupo_de, "Registros estimados:" %>
+            <span class="estimated"></span>
           </div>
         </div>
 
@@ -31,17 +41,22 @@
 
         <div class="row">
           <legend>Para</legend>
-          <div class="col-md-3">
+          <div class="col-md-2">
             <%= label_tag :mes, "Mês Para:" %>
             <br />
             <%= number_field_tag "mes_para", Time.now.to_date.month+1, style: "width: 70%", required: true %>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-2">
+            <%= label_tag :ano, "Ano para:" %>
+            <br />
+            <%= number_field_tag "ano_para", Time.now.to_date.year, style: "width: 70%", required: true %>
+          </div>
+          <div class="col-md-2">
             <%= label_tag :sequencial, "Seq Para:" %>
             <br />
             <%= number_field_tag "sequencial_para", 1, style: "width: 70%", required: true %>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-5">
             <%= label_tag :grupo_para, "Grupo Para:" %>
             <br />
             <%= select_tag("grupo_para", options_for_select(Grupo.all.collect {|x| [x.nome, x.id]}), {include_blank: false, required: true, style: "width: 50%;" }) %>
@@ -131,6 +146,21 @@
       monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
       nextText: 'Próximo',
       prevText: 'Anterior'
+    });
+
+    $("input.reloadme, select.reloadme").on("keyup change", function(){
+      $.ajax({
+        url: Routes.contagem_extracaos_path({ format: 'json' }),
+        data: {
+          mes_de: $("input[name='mes_de']").val(),
+          ano_de: $("input[name='ano_de']").val(),
+          sequencial_de: $("input[name='sequencial_de']").val(),
+          grupo_de: $("select[name='grupo_de']").val(),
+        },
+        success: function(data){
+          $("span.estimated").html(data.conta);
+        },
+      });
     });
   })
 </script>
