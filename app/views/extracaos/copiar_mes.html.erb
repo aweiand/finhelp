@@ -150,7 +150,7 @@
 
     $("input.reloadme, select.reloadme").on("keyup change", function(){
       $.ajax({
-        url: Routes.contagem_extracaos_path({ format: 'json' }),
+        url: '/<%= ENV['HOSTNAME'] %>' + Routes.contagem_extracaos_path({ format: 'json' }),
         data: {
           mes_de: $("input[name='mes_de']").val(),
           ano_de: $("input[name='ano_de']").val(),
